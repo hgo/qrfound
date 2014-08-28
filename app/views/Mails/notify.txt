@@ -1,0 +1,4 @@
+Hello ${to.split['@'][0]},
+
+Someone found your item, Call him from phone number; ${phone}.
+He says; ${comment}

@@ -1,0 +1,17 @@
+.top-buffer {
+	margin-top: 20px;
+}
+
+.top-buffer50 {
+	margin-top: 50px;
+}
+
+.aj-input-right {
+	display:none;
+	position: absolute;
+	right: 0px;
+	z-index: 3;
+}
+mark{
+	cursor: help;
+}

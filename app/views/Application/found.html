@@ -1,0 +1,30 @@
+#{extends 'main.html' /} #{set title:'Dashboard' /}
+<div class="row top-buffer50">
+    <div class="col-md-4 col-md-offset-4">
+        <form role="form" id="found" action="@{Application.notify}" method="post">
+            <fieldset>
+                <legend>You find someone's item?</legend>
+                <div class="input-group top-buffer">
+                    <label>Your phone number:</label>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-earphone"></span></span>
+                    <input type="tel" id="phone" name="phone" class="form-control bfh-phone" data-format="${countryCodes?.dial_code?:'+90'} (ddd) ddd-dddd"  placeholder="Phone Number" required="required">
+                    <img src="/public/images/aj.gif" class="aj-input-right">
+                </div>
+                <div class="input-group top-buffer">
+                    <label>Any comments?</label>
+                </div>
+                <textarea class="form-control  " rows="3"></textarea>
+                <input type="hidden" name="remoteAddress" value="${request.remoteAddress}">
+                <div class="form-group pull-right top-buffer">
+                   <i ><span>Owner of the item will call you..</span></i>
+                </div>
+                <button type="submit" class="btn btn-success btn-block ">Notify</button>
+            </fieldset>
+        </form>
+    </div>
+</div>
+<script type="text/javascript" >
+    require(['found']);
+</script>

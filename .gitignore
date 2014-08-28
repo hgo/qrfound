@@ -1,0 +1,17 @@
+.project
+.classpath
+.DS_Store
+.settings
+eclipse
+tmp
+test-result
+lib
+bin
+modules
+nbproject
+*.log
+/test
+press
+rideshare.iml
+rideshare.ipr
+rideshare.iws

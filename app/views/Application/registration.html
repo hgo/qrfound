@@ -1,0 +1,27 @@
+#{extends 'main.html' /} #{set title:'Registration' /}
+<div class="row top-buffer50" >
+    <div class="col-md-4 col-md-offset-4">
+        <form role="form" id="registration" action="@{Application.register}" method="post">
+            <div class="input-group top-buffer">
+                <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
+                <input name="email" type="email" class="form-control" placeholder="Email Address" required="required">
+                <img src="/public/images/aj.gif" class="aj-input-right">
+            </div>
+            <div class="input-group top-buffer">
+                <span class="input-group-addon"><span class="glyphicon glyphicon-earphone"></span></span>
+                <input type="tel" name="phone" class="form-control bfh-phone" data-format="${countryCodes?.dial_code} (ddd) ddd-dddd"  placeholder="Phone Number" required="required">
+                <img src="/public/images/aj.gif" class="aj-input-right">
+            </div>
+            <div class="input-group top-buffer">
+                <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                <input type="password" name="password" class="form-control" placeholder="Password" required="required">
+                <img src="/public/images/aj.gif" class="aj-input-right">
+            </div>
+            <input type="hidden" name="remoteAddress" value="${request.remoteAddress}">
+            <button type="submit" class="btn btn-success btn-block top-buffer">Submit</button>
+        </form>
+    </div>
+</div>
+<script type="text/javascript" >
+    require(['registration']);
+</script>

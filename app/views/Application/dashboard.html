@@ -1,0 +1,18 @@
+#{extends 'main.html' /} #{set title:'Dashboard' /}
+<div class="row top-buffer50">
+    <div class="col-md-6 col-md-offset-3">
+        <h2>Welcome ${user.email.split('@')[0]}</h2>
+        <p>
+            If your barcode is readed then we will notify you.
+            <br>Notification will contain the phone number of the founder.
+            <br>
+            Please <a href="#">download</a> FoundQR app and install to your
+            <mark title="${user.phone}">phone</mark>.
+            We will also send <mark title="${user.email}">email</mark>
+            <br>
+            Here is you barcode: <a href="@{Application.downloadQR(false)}" target="_blank">download qr</a>
+        </p>
+        <img src="@{Application.downloadQR(true)}">
+        <label></label>
+    </div>
+</div>
