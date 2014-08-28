@@ -22,13 +22,6 @@ public class MailTraffic extends Model {
     @Column(nullable=false,updatable=false)
     public String type;
     
-    private MailTraffic(){
-        throw new IllegalArgumentException("can not initiate");
-    }
-    
-    private MailTraffic(String type){
-        this.type = type;
-    }
 
 //    public static MailTraffic newNotifyMail(){
 ////        new MailTraffic("notify")
