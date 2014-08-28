@@ -14,7 +14,7 @@ import play.db.jpa.Model;
 public class MailTraffic extends Model {
 
     @Column(nullable = false)
-    public String to;
+    public String toMail;
     
     @Temporal(TemporalType.TIMESTAMP)
     public Date sentAt;
