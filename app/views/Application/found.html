@@ -1,7 +1,7 @@
 #{extends 'main.html' /} #{set title:'Dashboard' /}
 <div class="row top-buffer50">
     <div class="col-md-4 col-md-offset-4">
-        <form role="form" id="found" action="@{Application.notify}" method="post">
+        <form role="form" id="found" action="@{Application.notifyContact}" method="post">
             <fieldset>
                 <legend>You find someone's item?</legend>
                 <div class="input-group top-buffer">
@@ -15,8 +15,9 @@
                 <div class="input-group top-buffer">
                     <label>Any comments?</label>
                 </div>
-                <textarea class="form-control  " rows="3"></textarea>
+                <textarea class="form-control" name="comment" rows="3"></textarea>
                 <input type="hidden" name="remoteAddress" value="${request.remoteAddress}">
+                <input type="hidden" name="uuid" value="${uuid}">
                 <div class="form-group pull-right top-buffer">
                    <i ><span>Owner of the item will call you..</span></i>
                 </div>

@@ -1,24 +1,23 @@
 package controllers;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Date;
 import java.util.HashMap;
 
-import net.glxn.qrgen.image.ImageType;
-import notifiers.Mails;
 import models.Contact;
 import models.CountryCodes;
 import models.QRCode;
+import net.glxn.qrgen.image.ImageType;
+import notifiers.Mails;
 import play.Logger;
+import play.Play;
 import play.data.validation.Email;
 import play.data.validation.MinSize;
 import play.data.validation.Phone;
 import play.data.validation.Required;
 import play.libs.Codec;
-import play.libs.IO;
 import play.mvc.Controller;
 import play.mvc.Http.Header;
 import play.mvc.Util;
@@ -43,19 +42,18 @@ public class Application extends Controller {
         render(countryCodes);
     }
 
-    public static void register(@Required @Email String email,@Required @Phone String phone, @Required @MinSize(6) String password) {
-        if(validation.hasErrors()){
+    public static void register(@Required @Email String email, @Required @Phone String phone, @Required @MinSize(6) String password) {
+        if (validation.hasErrors()) {
             validation.keep();
             params.flash();
         }
         Contact contact = new Contact();
-        contact.email= email;
+        contact.email = email;
         contact.phone = phone;
         contact.password = Codec.hexMD5(password);
         contact = contact.save();
-        
-        File file = net.glxn.qrgen.QRCode.from("http://localhost:9000/found?uuid="+contact.uuid).withSize(250, 250)
-        .to(ImageType.PNG).file();
+        String url = Play.configuration.getProperty("found.url");
+        File file = net.glxn.qrgen.QRCode.from(url + contact.uuid).withSize(250, 250).to(ImageType.PNG).file();
         QRCode qrCode = new QRCode();
         qrCode.contact = contact;
         qrCode.createdAt = new Date();
@@ -64,11 +62,10 @@ public class Application extends Controller {
         FQRUtils.setConnectedUser(contact.id);
         dashboard();
     }
-    
-    
+
     public static void downloadQR(boolean inline) throws FileNotFoundException {
         Contact user = FQRUtils.connectedUser();
-        if(user == null){
+        if (user == null) {
             registration();
         }
         QRCode code = QRCode.findByUUID(user.uuid);
@@ -76,28 +73,30 @@ public class Application extends Controller {
         FileInputStream fs = new FileInputStream(code.qr);
         renderBinary(fs, "My_QRCode.png", false);
     }
+
     public static void dashboard() {
         Contact user = FQRUtils.connectedUser();
-        if(user == null){
+        if (user == null) {
             registration();
         }
         render(user);
     }
-    
+
     public static void found(String uuid) {
         notFoundIfNull(uuid);
         QRCode code = QRCode.findByUUID(uuid);
         notFoundIfNull(code);
-        render(code);
+        render(code,uuid);
     }
 
-    public static void notify(String phone, String comment, String uuid) {
+    public static void notifyContact(String phone, String comment, String uuid) {
         Contact contact = Contact.findByUUID(uuid);
-        Mails.notify(phone, comment, contact.email);
+        Mails.notifyContact(phone, comment, contact.email);
+        renderHtml("<h2>Thanks! You will be called..");
     }
-    
+
     @Util
-    private static HashMap checkInside(String key, String value){
+    private static HashMap checkInside(String key, String value) {
         boolean ok = false;
         String message = "";
         if ("email".equals(key)) {

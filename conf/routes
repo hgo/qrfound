@@ -12,5 +12,5 @@ GET     /favicon.ico                            404
 GET     /public/                                staticDir:public
 
 # Catch all
-GET     /found/{uid}                  			Application.found
+GET     /found/{uuid}                  			Application.found
 *       /{controller}/{action}                  {controller}.{action}
