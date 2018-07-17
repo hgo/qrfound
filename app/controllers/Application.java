@@ -1,11 +1,5 @@
 package controllers;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.Date;
-import java.util.HashMap;
-
 import models.Contact;
 import models.CountryCodes;
 import models.QRCode;
@@ -22,6 +16,13 @@ import play.mvc.Controller;
 import play.mvc.Http.Header;
 import play.mvc.Util;
 import utils.FQRUtils;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Date;
+import java.util.HashMap;
 
 public class Application extends Controller {
 
@@ -86,13 +87,19 @@ public class Application extends Controller {
         notFoundIfNull(uuid);
         QRCode code = QRCode.findByUUID(uuid);
         notFoundIfNull(code);
-        render(code,uuid);
+        render(code, uuid);
     }
 
     public static void notifyContact(String phone, String comment, String uuid) {
         Contact contact = Contact.findByUUID(uuid);
-        Mails.notifyContact(phone, comment, contact.email);
-        renderHtml("<h2>Thanks! You will be called..");
+        try {
+            Mails.notifyContact(phone, comment, contact.email);
+            renderHtml("<h2>Thanks! You will be called..");
+        } catch (IOException e) {
+            renderHtml("<h2>Unable to notify</h2>");
+            e.printStackTrace();
+        }
+
     }
 
     @Util

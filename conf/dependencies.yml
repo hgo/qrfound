@@ -3,3 +3,4 @@
 require:
     - play 1.2.7
     - net.glxn -> qrgen 1.4
+    - com.sendgrid -> sendgrid-java 3.0.9
